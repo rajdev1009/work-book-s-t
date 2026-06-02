@@ -1,64 +1,48 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AstraToonix 3D Knowledge Book</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=IM+Fell+English:ital@0;1&family=Noto+Sans+Devanagari:wght@400;600&family=Noto+Sans+Bengali:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- External Libraries for 3D Flip & Particles -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/st-page-flip/2.0.3/js/page-flip.browser.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="sepia"> <!-- Default Theme -->
 
-    <div id="loader">
-        <h1 class="loader-text">RAJ</h1>
-        <p class="loader-subtext">Summoning The Ancient Knowledge...</p>
-    </div>
+    <!-- RAJ Animation Loader -->
+    <div id="loader"><h1>RAJ</h1></div>
 
-    <div class="particles" id="particles"></div>
-
-    <div class="title-area">
-        <h1>✦ PRAGATI ELECTROCOM ✦</h1>
-    </div>
-
-    <div class="info-chips">
-        <button class="chip" id="chip-hi" onclick="setLanguage('hi')">Hindi</button>
-        <button class="chip active" id="chip-en" onclick="setLanguage('en')">English</button>
-        <button class="chip" id="chip-bn" onclick="setLanguage('bn')">Bengali</button>
-    </div>
-
-    <div class="book-scene" id="bookScene">
-        <div class="book-wrapper" id="bookWrapper">
-            <div class="book">
-                <div class="book-spine"><span class="spine-text">PRAGATI ELECTROCOM</span></div>
-                <div class="book-back"></div>
-                <div class="book-page" id="bookPage">
-                    <div class="page-border"></div>
-                    <div class="chapter-header">
-                        <div class="chapter-num" id="chapterNum">CHAPTER · I</div>
-                        <div class="chapter-title" id="chapterTitle">Title</div>
-                        <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
-                    </div>
-                    <div class="book-text" id="bookText">Content</div>
-                    <div class="speaking-indicator" id="speakIndicator">
-                        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
-                    </div>
-                    <div class="page-num" id="pageNum">— 1 —</div>
-                </div>
-            </div>
+    <!-- UI: Navigation & Search -->
+    <div class="top-nav">
+        <input type="text" id="searchBar" placeholder="Search chapters..." onkeyup="searchBook()">
+        <div class="theme-switcher">
+            <button onclick="toggleTheme('light')">☀️</button>
+            <button onclick="toggleTheme('sepia')">📜</button>
+            <button onclick="toggleTheme('dark')">🌙</button>
         </div>
-        <div class="book-glow"></div>
     </div>
 
-    <div class="controls-bar" id="controlsBar">
-        <button class="ctrl-btn" onclick="changePage(-1)"><i class="fa-solid fa-arrow-left"></i></button>
-        <button class="ctrl-btn" onclick="speakText()"><i class="fa-solid fa-volume-high"></i></button>
-        <button class="ctrl-btn" onclick="stopSpeak()"><i class="fa-solid fa-stop"></i></button>
-        <button class="ctrl-btn" onclick="toggleRotation()"><i class="fa-solid fa-rotate"></i></button>
-        <button class="ctrl-btn" onclick="changePage(1)"><i class="fa-solid fa-arrow-right"></i></button>
+    <!-- 3D Book Container -->
+    <div class="wrapper">
+        <div id="book-container">
+            <!-- Pages will be injected by script.js -->
+        </div>
     </div>
 
-    <div class="footer-credit">Designed by Raj Dev (AstraToonix)</div>
+    <!-- Progress & Controls -->
+    <div class="bottom-nav">
+        <div id="progressBar"><div id="progress"></div></div>
+        <div class="controls">
+            <button onclick="prevPage()"><i class="fas fa-chevron-left"></i></button>
+            <button onclick="speakCurrentPage()"><i class="fas fa-volume-up"></i></button>
+            <button onclick="toggleBookmark()"><i class="fas fa-bookmark"></i></button>
+            <button onclick="nextPage()"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
