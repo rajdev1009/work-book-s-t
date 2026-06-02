@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AstraToonix 3D Knowledge Book</title>
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=IM+Fell+English:ital@0;1&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=IM+Fell+English:ital@0;1&family=Noto+Sans+Devanagari:wght@400;600&family=Noto+Sans+Bengali:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Link to CSS -->
     <link rel="stylesheet" href="style.css">
@@ -28,9 +28,9 @@
 
     <!-- Languages -->
     <div class="info-chips">
-        <div class="chip" onclick="setLanguage('hi')">Hindi</div>
-        <div class="chip active" onclick="setLanguage('en')">English</div>
-        <div class="chip" onclick="setLanguage('bn')">Bengali</div>
+        <div class="chip" id="chip-hi" onclick="setLanguage('hi')">Hindi</div>
+        <div class="chip active" id="chip-en" onclick="setLanguage('en')">English</div>
+        <div class="chip" id="chip-bn" onclick="setLanguage('bn')">Bengali</div>
     </div>
 
     <!-- Book Scene -->
