@@ -1,49 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pragati Electrocom - 3D Earthing Book</title>
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <title>Pragati Electrocom - 3D Knowledge Book</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=IM+Fell+English:ital@0;1&family=Noto+Sans+Devanagari:wght@400;600&family=Noto+Sans+Bengali:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Pro Intro Loader -->
     <div id="loader">
         <h1 class="loader-text">RAJ</h1>
-        <p class="loader-subtext">Loading 3D Experience...</p>
+        <p class="loader-subtext">Summoning The Ancient Knowledge...</p>
     </div>
 
-    <!-- Glowing Cursor/Touch Follower -->
-    <div class="cursor-glow" id="cursorGlow"></div>
+    <div class="particles" id="particles"></div>
 
-    <!-- Language Controls -->
-    <div class="header">
-        <h2 class="main-heading interactive-text">Pragati Electrocom</h2>
-        <div class="controls">
-            <button class="lang-btn" onclick="setLanguage('hi')">Hindi</button>
-            <button class="lang-btn active" onclick="setLanguage('en')">English</button>
-            <button class="lang-btn" onclick="setLanguage('bn')">Bengali</button>
+    <div class="title-area">
+        <h1>✦ PRAGATI ELECTROCOM ✦</h1>
+    </div>
+
+    <div class="info-chips">
+        <div class="chip" onclick="setLanguage('hi')">Hindi</div>
+        <div class="chip active" onclick="setLanguage('en')">English</div>
+        <div class="chip" onclick="setLanguage('bn')">Bengali</div>
+    </div>
+
+    <div class="book-scene" id="bookScene">
+        <div class="book-wrapper" id="bookWrapper">
+            <div class="book">
+                <div class="book-spine">
+                    <span class="spine-text">PRAGATI ELECTROCOM · KNOWLEDGE BOOK</span>
+                </div>
+                <div class="book-back"></div>
+                
+                <div class="book-page" id="bookPage">
+                    <div class="page-border"></div>
+
+                    <div class="corner corner-tl"><svg viewBox="0 0 24 24" fill="none"><path d="M2 2 L12 2 L12 5 L5 5 L5 12 L2 12 Z" fill="rgba(120,80,20,0.4)"/><circle cx="3" cy="3" r="1.5" fill="rgba(180,120,30,0.5)"/></svg></div>
+                    <div class="corner corner-tr"><svg viewBox="0 0 24 24" fill="none"><path d="M2 2 L12 2 L12 5 L5 5 L5 12 L2 12 Z" fill="rgba(120,80,20,0.4)"/><circle cx="3" cy="3" r="1.5" fill="rgba(180,120,30,0.5)"/></svg></div>
+                    <div class="corner corner-bl"><svg viewBox="0 0 24 24" fill="none"><path d="M2 2 L12 2 L12 5 L5 5 L5 12 L2 12 Z" fill="rgba(120,80,20,0.4)"/><circle cx="3" cy="3" r="1.5" fill="rgba(180,120,30,0.5)"/></svg></div>
+                    <div class="corner corner-br"><svg viewBox="0 0 24 24" fill="none"><path d="M2 2 L12 2 L12 5 L5 5 L5 12 L2 12 Z" fill="rgba(120,80,20,0.4)"/><circle cx="3" cy="3" r="1.5" fill="rgba(180,120,30,0.5)"/></svg></div>
+
+                    <div class="chapter-header">
+                        <div class="chapter-num" id="chapterNum">CHAPTER · I</div>
+                        <div class="chapter-title" id="chapterTitle">Title</div>
+                        <div class="divider">
+                            <div class="divider-line"></div>
+                            <div class="divider-diamond"></div>
+                            <div class="divider-line"></div>
+                        </div>
+                    </div>
+
+                    <div class="book-text" id="bookText">Content</div>
+
+                    <div class="speaking-indicator" id="speakIndicator">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+
+                    <div class="page-num" id="pageNum">— 1 —</div>
+                </div>
+            </div>
         </div>
+        <div class="book-glow"></div>
     </div>
 
-    <!-- 3D Swiper Book -->
-    <div class="swiper mySwiper">
-        <div class="swiper-wrapper" id="book-content">
-            <!-- Content will be injected via JS -->
-        </div>
-        <div class="swiper-pagination"></div>
+    <div class="controls-bar" id="controlsBar">
+        <button class="ctrl-btn" onclick="changePage(-1)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+        <button class="ctrl-btn" onclick="speakText()"><i class="fa-solid fa-volume-high"></i> Read Aloud</button>
+        <button class="ctrl-btn" onclick="stopSpeak()"><i class="fa-solid fa-stop"></i> Stop</button>
+        <button class="ctrl-btn" onclick="toggleRotation()"><i class="fa-solid fa-rotate"></i> Rotate</button>
+        <button class="ctrl-btn" onclick="changePage(1)">Next <i class="fa-solid fa-arrow-right"></i></button>
     </div>
 
-    <!-- Footer Credit -->
-    <div class="footer interactive-text">
-        <i class="fa-solid fa-bolt"></i> Designed & Developed by <span>Raj Dev (AstraToonix)</span>
-    </div>
+    <div class="footer-credit">Crafted by Raj Dev</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
