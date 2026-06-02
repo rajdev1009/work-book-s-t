@@ -1,4 +1,4 @@
-// script.js - Final Pro Version
+// script.js - Final Fixed Version
 const bookData = {
     en: [
         { 
@@ -37,7 +37,6 @@ const bookData = {
 };
 
 let pageFlip = null;
-let currentLang = 'en';
 
 function initBook() {
     const container = document.getElementById('book-container');
@@ -79,7 +78,7 @@ function initBook() {
 
     updateProgressAndPageInfo();
     
-    // Hide loader
+    // Hide loader smoothly
     setTimeout(() => {
         const loader = document.getElementById('loader');
         loader.style.opacity = '0';
@@ -133,14 +132,12 @@ function toggleTheme(theme) {
 }
 
 function switchLanguage(lang) {
-    currentLang = lang;
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.toggle('active', btn.id === `lang-${lang}`);
     });
-    initBook();
+    // Currently only English data is available
 }
 
-// Live Search
 let searchTimeout = null;
 
 function initSearch() {
@@ -183,17 +180,15 @@ function initSearch() {
                 });
             }
             resultsBox.style.display = 'block';
-        }, 280);
+        }, 250);
     });
 }
 
-// Keyboard Support
 document.addEventListener('keydown', (e) => {
     if (e.key === "ArrowRight") nextPage();
     if (e.key === "ArrowLeft") prevPage();
 });
 
-// Initialize everything
 window.onload = () => {
     const savedTheme = localStorage.getItem('theme') || 'sepia';
     document.body.className = savedTheme;
@@ -202,7 +197,7 @@ window.onload = () => {
     initSearch();
 
     const lastPage = localStorage.getItem('lastReadPage');
-    if (lastPage && pageFlip) {
+    if (lastPage) {
         setTimeout(() => {
             if (pageFlip) pageFlip.flipTo(parseInt(lastPage));
         }, 1500);
