@@ -1,79 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <title>Pragati Knowledge Book</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=IM+Fell+English&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstraToonix 3D Knowledge Book</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=IM+Fell+English:ital@0;1&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* CSS यहाँ से कॉपी करें */
-        body { background: #000; color: #c9a84c; font-family: 'IM Fell English', serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; }
-        .book-page { background: #f5ead0; padding: 40px; width: 90vw; max-width: 600px; min-height: 500px; border-radius: 10px; color: #1a0e00; box-shadow: 0 0 20px #c9a84c; margin-top: 50px; }
-        .page-title { font-size: 1.5rem; font-weight: bold; border-bottom: 2px solid #7a5c1a; margin-bottom: 20px; }
-        .controls { margin-top: 20px; display: flex; gap: 10px; }
-        button { padding: 10px 20px; cursor: pointer; background: #c9a84c; border: none; border-radius: 5px; }
-    </style>
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="book-page" id="bookPage">
-        <div id="contentArea">
-            <h2 class="page-title" id="pTitle">Loading...</h2>
-            <div id="pContent"></div>
+    <!-- RAJ PRO LOADER -->
+    <div id="loader">
+        <h1 class="loader-text">RAJ</h1>
+        <p class="loader-subtext">Summoning The Ancient Knowledge...</p>
+    </div>
+
+    <!-- Floating particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Title -->
+    <div class="title-area">
+        <h1>✦ PRAGATI ELECTROCOM ✦</h1>
+    </div>
+
+    <!-- Languages -->
+    <div class="info-chips">
+        <div class="chip" onclick="setLanguage('hi')">Hindi</div>
+        <div class="chip active" onclick="setLanguage('en')">English</div>
+        <div class="chip" onclick="setLanguage('bn')">Bengali</div>
+    </div>
+
+    <!-- Book Scene -->
+    <div class="book-scene" id="bookScene">
+        <div class="book-wrapper" id="bookWrapper">
+            <div class="book">
+                <!-- Spine -->
+                <div class="book-spine">
+                    <span class="spine-text">PRAGATI ELECTROCOM · KNOWLEDGE BOOK</span>
+                </div>
+                <!-- Back -->
+                <div class="book-back"></div>
+                
+                <!-- Page -->
+                <div class="book-page" id="bookPage">
+                    <div class="page-border"></div>
+
+                    <!-- Corners -->
+                    <div class="corner corner-tl"><svg viewBox="0 0 24 24" fill="none"><path d="M2 2 L12 2 L12 5 L5 5 L5 12 L2 12 Z" fill="rgba(120,80,20,0.4)"/><circle cx="3" cy="3" r="1.5" fill="rgba(180,120,30,0.5)"/></svg></div>
+                    <div class="corner corner-tr"><svg viewBox="0 0 24 24" fill="none"><path d="M2 2 L12 2 L12 5 L5 5 L5 12 L2 12 Z" fill="rgba(120,80,20,0.4)"/><circle cx="3" cy="3" r="1.5" fill="rgba(180,120,30,0.5)"/></svg></div>
+                    <div class="corner corner-bl"><svg viewBox="0 0 24 24" fill="none"><path d="M2 2 L12 2 L12 5 L5 5 L5 12 L2 12 Z" fill="rgba(120,80,20,0.4)"/><circle cx="3" cy="3" r="1.5" fill="rgba(180,120,30,0.5)"/></svg></div>
+                    <div class="corner corner-br"><svg viewBox="0 0 24 24" fill="none"><path d="M2 2 L12 2 L12 5 L5 5 L5 12 L2 12 Z" fill="rgba(120,80,20,0.4)"/><circle cx="3" cy="3" r="1.5" fill="rgba(180,120,30,0.5)"/></svg></div>
+
+                    <!-- Header -->
+                    <div class="chapter-header">
+                        <div class="chapter-num" id="chapterNum">CHAPTER · I</div>
+                        <div class="chapter-title" id="chapterTitle">Title</div>
+                        <div class="divider">
+                            <div class="divider-line"></div>
+                            <div class="divider-diamond"></div>
+                            <div class="divider-line"></div>
+                        </div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="book-text" id="bookText">Content</div>
+
+                    <!-- TTS Indicator -->
+                    <div class="speaking-indicator" id="speakIndicator">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+
+                    <div class="page-num" id="pageNum">— 1 —</div>
+                </div>
+            </div>
         </div>
+        <div class="book-glow"></div>
     </div>
 
-    <div class="controls">
-        <button onclick="changePage(-1)">Previous</button>
-        <button onclick="changePage(1)">Next</button>
-        <button onclick="setLang('en')">EN</button>
-        <button onclick="setLang('hi')">HI</button>
-        <button onclick="setLang('bn')">BN</button>
+    <!-- Controls -->
+    <div class="controls-bar" id="controlsBar">
+        <button class="ctrl-btn" onclick="changePage(-1)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+        <button class="ctrl-btn" onclick="speakText()"><i class="fa-solid fa-volume-high"></i> Read Aloud</button>
+        <button class="ctrl-btn" onclick="stopSpeak()"><i class="fa-solid fa-stop"></i> Stop</button>
+        <button class="ctrl-btn" onclick="toggleRotation()"><i class="fa-solid fa-rotate"></i> Rotate</button>
+        <button class="ctrl-btn" onclick="changePage(1)">Next <i class="fa-solid fa-arrow-right"></i></button>
     </div>
 
-    <script>
-        // डेटा (आपका पूरा 100% कंटेंट यहाँ है)
-        const data = {
-            en: [
-                { title: "PRAGATI ELECTROCOM", content: "Today Pragati has an all India presence through its branch offices and offer solutions for: EXTERNAL LIGHTNING PROTECTION: Two types of external lightning protection namely 'Advanced Lightning Prevention' and 'Advanced Lightning Capture' system are available." },
-                { title: "INTERNAL PROTECTION", content: "Class B Protection at building entry (100KA). Class C Protection before distribution board (20KA). Class D Protection for Telephone, Radio, Network and Server." },
-                { title: "MAINTENANCE FREE EARTHING", content: "Kit includes: UL/CPRI Copper electrode, LOHM (IEC 62561-7), Polypit Chamber, Copper Bus Bar. Resistance up to 1.0 Ohm." },
-                { title: "EARTH ELECTRODE", content: "Length: 3/2m, Dia: 17mm. Copper coating: >250 Microns. Steel Core: 1035 ASTM A1080. 99.95% pure copper." },
-                { title: "LOHM PROPERTIES", content: "Permanent, maintenance free. Resistivity <0.07 ohm-m. Conforms to IEC 62561 Part-7. Non toxic, non corrosive." },
-                { title: "CONDUCTIVE GEL & POLY PIT", content: "Conductive Gel: Highly hygroscopic electrolyte base. Poly Pit: Heavy-duty poly plastic, weather proof, 4 knock-out openings for grid." },
-                { title: "COPPER STRIP", content: "Length: 3.0m, Width: 25mm, Thickness: 3mm. Steel core 1035. >250 Microns copper coating." },
-                { title: "EXOTHERMIC WELDING", content: "Superheated copper alloy for permanent maintenance free joints. UL 467 approved system." }
-            ],
-            hi: [
-                { title: "प्रगति इलेक्ट्रोकॉम", content: "आज प्रगति की अखिल भारतीय उपस्थिति है। बाहरी लाइटनिंग प्रोटेक्शन: 'एडवांस्ड लाइटनिंग प्रिवेंशन' और 'एडवांस्ड लाइटनिंग कैप्चर' सिस्टम।" },
-                { title: "आंतरिक लाइटनिंग प्रोटेक्शन", content: "क्लास B (100KA), क्लास C (20KA), क्लास D (टेलीफोन, सर्वर प्रोटेक्शन)।" },
-                { title: "मेंटेनेंस फ्री अर्थिंग", content: "किट में शामिल: UL/CPRI कॉपर इलेक्ट्रोड, LOHM (IEC 62561-7), पॉलीपिट चैम्बर और बस बार।" },
-                { title: "अर्थ इलेक्ट्रोड", content: "लंबाई: 3/2 मीटर, व्यास: 17mm, कोटिंग: 250 माइक्रोन। स्टील कोर 1035, 99.95% शुद्ध कॉपर।" },
-                { title: "LOHM गुण", content: "स्थायी और मेंटेनेंस फ्री। रेजिस्टिविटी 0.07 ohm-m से कम। IEC 62561 Part-7 के अनुरूप।" },
-                { title: "कंडक्टिव जेल और पॉली पिट", content: "जेल: नमी सोखने वाला इलेक्ट्रोलाइट। पॉली पिट: हेवी-ड्यूटी वेदर-प्रूफ प्लास्टिक।" },
-                { title: "कॉपर स्ट्रिप", content: "लंबाई: 3.0 मीटर, चौड़ाई: 25mm, मोटाई: 3mm। कोटिंग: 250 माइक्रोन।" },
-                { title: "एक्सोथर्मिक वेल्डिंग", content: "स्थायी और मेंटेनेंस फ्री जोड़ के लिए सुपरहीटेड कॉपर मिश्र धातु का उपयोग। UL 467 स्वीकृत।" }
-            ],
-            bn: [
-                { title: "প্রগতি ইলেক্ট্রোকম", content: "আজ প্রগতির সমগ্র ভারতে উপস্থিতি রয়েছে। বজ্রপাত সুরক্ষা: 'অ্যাডভান্সড লাইটনিং প্রিভেনশন' এবং 'ক্যাপচার' সিস্টেম।" },
-                { title: "অভ্যন্তরীণ সুরক্ষা", content: "ক্লাস B (100KA), ক্লাস C (20KA), ক্লাস D (টেলিফোন, সার্ভার সুরক্ষা)।" },
-                { title: "রক্ষণাবেক্ষণ মুক্ত আর্থিং", content: "UL/CPRI ইলেকট্রোড, LOHM (IEC 62561-7), পলিপিট চেম্বার এবং কপার বাস বার।" },
-                { title: "আর্থ ইলেকট্রোড", content: "দৈর্ঘ্য ৩/২ মিটার, ব্যাস ১৭ মিমি, কোটিং ২৫০ মাইক্রন। ৯৯.৯৫% খাঁটি কপার।" },
-                { title: "LOHM বৈশিষ্ট্য", content: "স্থায়ী এবং রক্ষণাবেক্ষণ মুক্ত। প্রতিরোধ ক্ষমতা ০.০৭ ohm-m এর কম। IEC 62561 Part-7 মেনে চলে।" },
-                { title: "জেল এবং পলি পিট", content: "জেল: অত্যন্ত আর্দ্রতা শোষক। পলি পিট: হেভি-ডিউটি ওয়েদার-প্রুফ প্লাস্টিক।" },
-                { title: "কপার স্ট্রিপ", content: "দৈর্ঘ্য ৩.০ মিটার, প্রস্থ ২৫ মিমি, পুরুত্ব ৩ মিমি। কোটিং ২৫০ মাইক্রন।" },
-                { title: "এক্সোথার্মিক ওয়েল্ডিং", content: "স্থায়ী জয়েন্টের জন্য সুপারহিটেড কপার অ্যালয় ব্যবহার। UL 467 অনুমোদিত।" }
-            ]
-        };
+    <div class="footer-credit">Designed & Developed by Raj Dev (AstraToonix)</div>
 
-        let lang = 'en', page = 0;
-        function setLang(l) { lang = l; page = 0; render(); }
-        function changePage(d) { page = (page + d + 8) % 8; render(); }
-        function render() {
-            document.getElementById('pTitle').innerText = data[lang][page].title;
-            document.getElementById('pContent').innerHTML = data[lang][page].content;
-        }
-        render();
-    </script>
+    <!-- Link to JS -->
+    <script src="script.js"></script>
 </body>
 </html>
