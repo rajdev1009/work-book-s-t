@@ -3,43 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AstraToonix 3D Knowledge Book</title>
+    <meta name="description" content="AstraToonix - 3D Interactive Knowledge Book | Pragati Electrocom Technical Library">
+    <title>AstraToonix • The Ancient Codex</title>
     
-    <!-- Correct CDN for StPageFlip -->
-    <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Modern Page Flip Library (2026 Best) -->
+    <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.min.js"></script>
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="sepia">
 
-    <!-- Loader -->
+    <!-- Premium Loader -->
     <div id="loader">
-        <h1 class="loader-text">RAJ</h1>
-    </div>
-
-    <!-- Top Navigation -->
-    <div class="top-nav">
-        <input type="text" id="searchBar" placeholder="Search in book..." onkeyup="if(event.key === 'Enter') searchBook()">
-        <div class="theme-switcher">
-            <button onclick="toggleTheme('light')">☀️</button>
-            <button onclick="toggleTheme('sepia')">📜</button>
-            <button onclick="toggleTheme('dark')">🌙</button>
+        <div class="loader-content">
+            <h1 class="loader-text">RAJ</h1>
+            <p class="loader-sub">Awakening the Codex...</p>
         </div>
     </div>
 
-    <!-- Book Container -->
-    <div class="wrapper">
+    <!-- Top Bar -->
+    <div class="top-nav">
+        <div class="nav-left">
+            <h3 class="logo">AstraToonix</h3>
+        </div>
+
+        <div class="search-container">
+            <input type="text" id="searchBar" placeholder="Search the Codex..." autocomplete="off">
+            <div id="searchResults" class="search-dropdown"></div>
+        </div>
+
+        <div class="nav-right">
+            <!-- Language Switcher -->
+            <div class="lang-switcher">
+                <button onclick="switchLanguage('en')" class="lang-btn active" id="lang-en">EN</button>
+                <button onclick="switchLanguage('hi')" class="lang-btn" id="lang-hi">हिं</button>
+                <button onclick="switchLanguage('bn')" class="lang-btn" id="lang-bn">বাং</button>
+            </div>
+
+            <!-- Theme -->
+            <div class="theme-switcher">
+                <button onclick="toggleTheme('light')" title="Light Mode">☀️</button>
+                <button onclick="toggleTheme('sepia')" title="Ancient Scroll" class="active">📜</button>
+                <button onclick="toggleTheme('dark')" title="Void Mode">🌑</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Book Container -->
+    <div class="book-wrapper">
         <div id="book-container"></div>
     </div>
 
     <!-- Bottom Controls -->
     <div class="bottom-nav">
-        <div id="progressBar"><div id="progress"></div></div>
+        <div class="progress-container">
+            <div id="progressBar"><div id="progress"></div></div>
+            <span id="pageInfo" class="page-counter">1 / 8</span>
+        </div>
+        
         <div class="controls">
-            <button onclick="prevPage()"><i class="fas fa-chevron-left"></i></button>
-            <button onclick="speakCurrentPage()"><i class="fas fa-volume-up"></i></button>
-            <button onclick="toggleBookmark()"><i class="fas fa-bookmark"></i></button>
-            <button onclick="nextPage()"><i class="fas fa-chevron-right"></i></button>
+            <button onclick="prevPage()" class="control-btn"><i class="fas fa-chevron-left"></i></button>
+            <button onclick="speakCurrentPage()" class="control-btn"><i class="fas fa-volume-high"></i></button>
+            <button onclick="toggleBookmark()" class="control-btn"><i class="fas fa-bookmark"></i></button>
+            <button onclick="nextPage()" class="control-btn"><i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
 
