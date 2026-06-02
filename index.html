@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AstraToonix - 3D Interactive Knowledge Book | Pragati Electrocom Technical Library">
+    <meta name="description" content="AstraToonix - 3D Interactive Knowledge Book">
     <title>AstraToonix • The Ancient Codex</title>
     
-    <!-- Modern Page Flip Library (2026 Best) -->
-    <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.min.js"></script>
+    <!-- Correct CDN for Page Flip Library -->
+    <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
     
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!-- Custom Styles -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="sepia">
@@ -37,14 +34,12 @@
         </div>
 
         <div class="nav-right">
-            <!-- Language Switcher -->
             <div class="lang-switcher">
                 <button onclick="switchLanguage('en')" class="lang-btn active" id="lang-en">EN</button>
                 <button onclick="switchLanguage('hi')" class="lang-btn" id="lang-hi">हिं</button>
                 <button onclick="switchLanguage('bn')" class="lang-btn" id="lang-bn">বাং</button>
             </div>
 
-            <!-- Theme -->
             <div class="theme-switcher">
                 <button onclick="toggleTheme('light')" title="Light Mode">☀️</button>
                 <button onclick="toggleTheme('sepia')" title="Ancient Scroll" class="active">📜</button>
@@ -53,12 +48,10 @@
         </div>
     </div>
 
-    <!-- Main Book Container -->
     <div class="book-wrapper">
         <div id="book-container"></div>
     </div>
 
-    <!-- Bottom Controls -->
     <div class="bottom-nav">
         <div class="progress-container">
             <div id="progressBar"><div id="progress"></div></div>
