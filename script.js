@@ -1,17 +1,25 @@
-// script.js
-const bookData = { /* tumhara pura data yahin rahega */ };
+const bookData = {
+    en: [
+        { title: "PRAGATI ELECTROCOM", content: "Today Pragati has an all India presence offering: EXTERNAL LIGHTNING PROTECTION: 'Advanced Lightning Prevention' and 'Capture' systems. Capable of 200KA multi-strike protection." },
+        { title: "INTERNAL PROTECTION", content: "Class B (100KA) at building entry using RADAX. Class C (20KA) at distribution board. Class D for Telephone, Network and Server protection." },
+        { title: "MAINTENANCE FREE EARTHING", content: "Kit includes: UL/CPRI Copper electrode, Patented LOHM (IEC 62561-7), Polypit Chamber, Copper Bus Bar. Resistance < 1.0 Ohm." },
+        { title: "EARTH ELECTRODE", content: "Length: 3/2m, Dia: 17mm. Copper coating: >250 Microns. Steel Core: 1035 ASTM A1080 (90000 psi). 99.95% pure copper." },
+        { title: "LOHM PROPERTIES", content: "Permanent, maintenance free. Resistivity <0.07 ohm-m. Non-toxic, non-corrosive, non-explosive." },
+        { title: "CONDUCTIVE GEL & POLY PIT", content: "Gel: Highly hygroscopic electrolyte. Poly Pit: Heavy-duty weather-proof plastic, 4 knock-out openings for grid." },
+        { title: "COPPER COATED STRIP", content: "Length: 3.0m, Width: 25mm, Thickness: 3mm. Holes on ends. Steel Core 1035 (90000 psi)." },
+        { title: "EXOTHERMIC WELDING", content: "Superheated copper alloy for permanent maintenance-free joints. UL 467 approved system." }
+    ]
+};
 
-let pageFlip;
+let pageFlip = null;
 let currentLang = 'en';
 
 function initBook() {
     const container = document.getElementById('book-container');
-    
-    // Clear previous pages
-    container.innerHTML = '';
+    container.innerHTML = ''; // Clear pehle
 
-    // Create pages
-    bookData[currentLang].forEach((page, index) => {
+    // Pages create karo
+    bookData[currentLang].forEach(page => {
         const pageDiv = document.createElement('div');
         pageDiv.className = 'page';
         pageDiv.innerHTML = `
@@ -23,23 +31,21 @@ function initBook() {
         container.appendChild(pageDiv);
     });
 
-    // Initialize StPageFlip
+    // Initialize PageFlip
     pageFlip = new St.PageFlip(container, {
-        width: 400,           // single page width
-        height: 500,
+        width: 420,
+        height: 520,
         size: "stretch",
         minWidth: 300,
-        maxWidth: 800,
+        maxWidth: 900,
         minHeight: 400,
-        maxHeight: 600,
+        maxHeight: 650,
         showCover: true,
         mobileScrollSupport: true,
-        maxShadowOpacity: 0.5,
-        flippingTime: 800,    // animation speed
-        usePortrait: true
+        flippingTime: 900,
+        maxShadowOpacity: 0.6
     });
 
-    // Load pages
     pageFlip.loadFromHTML(container.querySelectorAll('.page'));
 
     // Events
@@ -48,8 +54,12 @@ function initBook() {
         saveProgress();
     });
 
-    // Initial progress
     updateProgress();
+
+    // Hide loader after book loads
+    setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+    }, 1200);
 }
 
 function updateProgress() {
@@ -66,18 +76,13 @@ function saveProgress() {
     }
 }
 
-function nextPage() {
-    if (pageFlip) pageFlip.flipNext();
-}
-
-function prevPage() {
-    if (pageFlip) pageFlip.flipPrev();
-}
+function nextPage() { if (pageFlip) pageFlip.flipNext(); }
+function prevPage() { if (pageFlip) pageFlip.flipPrev(); }
 
 function speakCurrentPage() {
     if (!pageFlip) return;
-    const currentIndex = pageFlip.getCurrentPageIndex();
-    const text = bookData[currentLang][currentIndex].content;
+    const index = pageFlip.getCurrentPageIndex();
+    const text = bookData[currentLang][index].content;
     const utterance = new SpeechSynthesisUtterance(text);
     window.speechSynthesis.speak(utterance);
 }
@@ -87,39 +92,26 @@ function toggleTheme(theme) {
     localStorage.setItem('theme', theme);
 }
 
-// Search (basic)
 function searchBook() {
     const query = document.getElementById('searchBar').value.toLowerCase().trim();
-    if (!query) return;
-
-    const results = bookData[currentLang].filter(page => 
-        page.title.toLowerCase().includes(query) || 
-        page.content.toLowerCase().includes(query)
+    if (!query || !pageFlip) return;
+    
+    const results = bookData[currentLang].findIndex(page => 
+        page.title.toLowerCase().includes(query) || page.content.toLowerCase().includes(query)
     );
-
-    if (results.length > 0) {
-        alert(`Found ${results.length} results. First match: ${results[0].title}`);
-        // Better: highlight ya jump to page
+    
+    if (results !== -1) {
+        pageFlip.flipTo(results);
     } else {
-        alert("No results found");
+        alert("No matching content found!");
     }
 }
 
-// Keyboard
-document.addEventListener('keydown', (e) => {
+// Keyboard support
+document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight') nextPage();
     if (e.key === 'ArrowLeft') prevPage();
 });
 
-// Load on start
-window.onload = () => {
-    initBook();
-    
-    // Restore last page
-    const lastPage = localStorage.getItem('lastPage');
-    if (lastPage && pageFlip) {
-        setTimeout(() => {
-            pageFlip.flipTo(parseInt(lastPage));
-        }, 800);
-    }
-};
+// Start everything
+window.onload = initBook;
