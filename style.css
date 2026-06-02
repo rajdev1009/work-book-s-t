@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+
+:root {
+    --primary: #00e5ff;
+    --secondary: #b92b27;
+    --bg-dark: #070b19;
+    --card-bg: rgba(15, 23, 42, 0.7);
+    --text-light: #e2e8f0;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at center, #111827, #000000);
+    color: var(--text-light);
+    overflow: hidden; 
+}
+
+/* ================= LOADER ================= */
+#loader {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 1s ease-out;
+}
+
+.loader-text {
+    font-size: 5rem;
+    font-weight: 800;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--primary);
+    text-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+    animation: heartbeat 1.5s infinite, glowText 2s infinite alternate;
+    letter-spacing: 10px;
+    margin: 0;
+}
+
+.loader-subtext {
+    color: var(--primary);
+    margin-top: 10px;
+    letter-spacing: 3px;
+    font-size: 1rem;
+    animation: blink 1.5s infinite;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* ================= TOUCH GLOW EFFECT ================= */
+.cursor-glow {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(0,229,255,0.4) 0%, rgba(0,0,0,0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    transition: width 0.2s, height 0.2s;
+}
+
+/* ================= HEADER ================= */
+.header {
+    text-align: center;
+    padding: 20px 0 10px 0;
+    z-index: 10;
+    position: relative;
+}
+
+.main-heading {
+    font-size: 2rem;
+    color: var(--primary);
+    text-transform: uppercase;
+    text-shadow: 0 0 15px var(--primary);
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.lang-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--primary);
+    color: var(--text-light);
+    padding: 8px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: 0.3s;
+}
+
+.lang-btn.active, .lang-btn:hover {
+    background: var(--primary);
+    color: #000;
+    box-shadow: 0 0 15px var(--primary);
+    transform: scale(1.1);
+}
+
+/* ================= 3D SWIPER & PAGES ================= */
+.swiper {
+    width: 100%;
+    height: 70vh; /* Controlled height for scrolling */
+    padding-top: 10px;
+    padding-bottom: 40px;
+}
+
+.swiper-slide {
+    background: var(--card-bg);
+    width: 320px !important;
+    height: 100%;
+    border-radius: 20px;
+    padding: 25px;
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 10px 30px rgba(0,229,255,0.1);
+    backdrop-filter: blur(15px);
+    display: flex;
+    flex-direction: column;
+}
+
+.page-title {
+    color: #fff;
+    font-size: 1.3rem;
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px var(--primary);
+}
+
+/* Scrollable Content inside the card */
+.page-content {
+    flex-grow: 1;
+    overflow-y: auto; /* Adds scroll if text is long */
+    padding-right: 5px;
+    margin-bottom: 15px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) transparent;
+}
+
+.page-content::-webkit-scrollbar {
+    width: 4px;
+}
+.page-content::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 10px;
+}
+
+.page-content p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.interactive-text {
+    transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), text-shadow 0.2s;
+    display: inline-block;
+}
+
+/* ================= TTS BUTTON ================= */
+.tts-btn {
+    margin-top: auto;
+    background: linear-gradient(45deg, #1e3a8a, #00e5ff);
+    border: none;
+    color: #fff;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 229, 255, 0.4);
+    transition: 0.3s;
+    width: 100%;
+}
+
+.tts-btn:hover {
+    box-shadow: 0 8px 25px rgba(0, 229, 255, 0.7);
+    transform: translateY(-2px);
+}
+
+/* ================= FOOTER ================= */
+.footer {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.footer span {
+    color: var(--primary);
+    font-weight: bold;
+    text-shadow: 0 0 5px var(--primary);
+}
