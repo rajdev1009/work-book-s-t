@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pragati Electrocom - 3D Earthing Book</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Pro Intro Loader -->
+    <div id="loader">
+        <h1 class="loader-text">RAJ</h1>
+        <p class="loader-subtext">Loading 3D Experience...</p>
+    </div>
+
+    <!-- Glowing Cursor/Touch Follower -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- Language Controls -->
+    <div class="header">
+        <h2 class="main-heading interactive-text">Pragati Electrocom</h2>
+        <div class="controls">
+            <button class="lang-btn" onclick="setLanguage('hi')">Hindi</button>
+            <button class="lang-btn active" onclick="setLanguage('en')">English</button>
+            <button class="lang-btn" onclick="setLanguage('bn')">Bengali</button>
+        </div>
+    </div>
+
+    <!-- 3D Swiper Book -->
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper" id="book-content">
+            <!-- Content will be injected via JS -->
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- Footer Credit -->
+    <div class="footer interactive-text">
+        <i class="fa-solid fa-bolt"></i> Designed & Developed by <span>Raj Dev (AstraToonix)</span>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
