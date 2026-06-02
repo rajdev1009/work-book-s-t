@@ -107,50 +107,46 @@ const bookData = {
 let currentLang = 'en';
 let swiper;
 
-// ================= LOADER LOGIC =================
-window.addEventListener('load', () => {
-    setTimeout(() => {
+// ================= NEW, SAFE LOADER LOGIC =================
+// यह अब इंटरनेट का इंतज़ार नहीं करेगा। 2 सेकंड बाद खुद-ब-खुद हट जाएगा।
+setTimeout(() => {
+    try {
         const loader = document.getElementById('loader');
-        loader.style.opacity = '0';
-        setTimeout(() => {
-            loader.style.display = 'none';
-        }, 1000); 
-    }, 2500);
-});
+        if (loader) {
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 1000); 
+        }
+    } catch(err) {
+        console.log("Loader hide error:", err);
+    }
+}, 2000);
 
 // ================= RENDER CONTENT & INIT SWIPER =================
 function renderBook() {
-    const container = document.getElementById('book-content');
-    container.innerHTML = ''; 
-
-    bookData[currentLang].forEach((page, index) => {
-        const slide = document.createElement('div');
-        slide.className = 'swiper-slide';
+    try {
+        const container = document.getElementById('book-content');
+        if (!container) return; // Safety check
         
-        slide.innerHTML = `
-            <div class="page-title interactive-text">${page.title}</div>
-            <div class="page-content interactive-text">
-                <p>${page.content}</p>
-            </div>
-            <button class="tts-btn" onclick="speakContent(${index})">
-                <i class="fa-solid fa-volume-high"></i> Read Aloud
-            </button>
-        `;
-        container.appendChild(slide);
-    });
+        container.innerHTML = ''; 
 
-    if (swiper) {
-        swiper.destroy(); 
-    }
-    
-    swiper = new Swiper(".mySwiper", {
-        effect: "coverflow",
-        grabCursor: true,
-        centeredSlides: true,
-        slidesPerView: "auto",
-        coverflowEffect: {
-            rotate: 40,
-            stretch: 0,
-            depth: 200,
-            modifier: 1,
-            slideSh
+        bookData[currentLang].forEach((page, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'swiper-slide';
+            
+            slide.innerHTML = `
+                <div class="page-title interactive-text">${page.title}</div>
+                <div class="page-content interactive-text">
+                    <p>${page.content}</p>
+                </div>
+                <button class="tts-btn" onclick="speakContent(${index})">
+                    <i class="fa-solid fa-volume-high"></i> Read Aloud
+                </button>
+            `;
+            container.appendChild(slide);
+        });
+
+        if (swiper) {
+            swiper.destroy(); 
+     
