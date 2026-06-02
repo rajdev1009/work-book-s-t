@@ -5,20 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AstraToonix 3D Knowledge Book</title>
     
-    <!-- External Libraries for 3D Flip & Particles -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/st-page-flip/2.0.3/js/page-flip.browser.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Correct CDN for StPageFlip -->
+    <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="sepia"> <!-- Default Theme -->
+<body class="sepia">
 
-    <!-- RAJ Animation Loader -->
-    <div id="loader"><h1>RAJ</h1></div>
+    <!-- Loader -->
+    <div id="loader">
+        <h1 class="loader-text">RAJ</h1>
+    </div>
 
-    <!-- UI: Navigation & Search -->
+    <!-- Top Navigation -->
     <div class="top-nav">
-        <input type="text" id="searchBar" placeholder="Search chapters..." onkeyup="searchBook()">
+        <input type="text" id="searchBar" placeholder="Search in book..." onkeyup="if(event.key === 'Enter') searchBook()">
         <div class="theme-switcher">
             <button onclick="toggleTheme('light')">☀️</button>
             <button onclick="toggleTheme('sepia')">📜</button>
@@ -26,14 +27,12 @@
         </div>
     </div>
 
-    <!-- 3D Book Container -->
+    <!-- Book Container -->
     <div class="wrapper">
-        <div id="book-container">
-            <!-- Pages will be injected by script.js -->
-        </div>
+        <div id="book-container"></div>
     </div>
 
-    <!-- Progress & Controls -->
+    <!-- Bottom Controls -->
     <div class="bottom-nav">
         <div id="progressBar"><div id="progress"></div></div>
         <div class="controls">
