@@ -1,0 +1,1836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="EduBot-Pro is an AI-powered Telegram bot for Class 1–12 self-study, secure exams, adaptive learning, leaderboards, and admin-controlled assessments." />
+  <title>EduBot-Pro | AI Telegram Bot for Smart Learning & Secure Exams</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    :root {
+      --blue: #2563eb;
+      --blue-dark: #1d4ed8;
+      --blue-soft: #dbeafe;
+      --purple: #7c3aed;
+      --purple-dark: #5b21b6;
+      --purple-soft: #ede9fe;
+      --gold: #f6c453;
+      --gold-soft: #fff4cc;
+      --white: #ffffff;
+      --ink: #101828;
+      --muted: #667085;
+      --line: #e6eaf2;
+      --bg: #f7f9ff;
+      --green: #10b981;
+      --red: #ef4444;
+      --shadow: 0 24px 70px rgba(37, 99, 235, 0.14);
+      --shadow-soft: 0 14px 40px rgba(16, 24, 40, 0.08);
+      --radius: 26px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.16), transparent 34rem),
+        radial-gradient(circle at top right, rgba(124, 58, 237, 0.14), transparent 34rem),
+        linear-gradient(180deg, #ffffff 0%, #f7f9ff 42%, #ffffff 100%);
+      color: var(--ink);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font-family: inherit;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 14px 0;
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(230, 234, 242, 0.78);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      font-size: 1.2rem;
+    }
+
+    .logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      display: grid;
+      place-items: center;
+      color: white;
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.28);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo::after {
+      content: "";
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.18);
+      border-radius: 50%;
+      right: -8px;
+      top: -7px;
+    }
+
+    .logo svg {
+      width: 25px;
+      height: 25px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .navlinks {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .navlinks a {
+      padding: 10px 13px;
+      color: #475467;
+      font-size: 0.94rem;
+      font-weight: 700;
+      border-radius: 999px;
+      transition: 0.25s ease;
+    }
+
+    .navlinks a:hover {
+      color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      transition: 0.25s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      color: white;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      box-shadow: 0 16px 36px rgba(37, 99, 235, 0.22);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 44px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-secondary {
+      color: var(--blue-dark);
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 24px rgba(16, 24, 40, 0.06);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      border-color: rgba(37, 99, 235, 0.24);
+      background: #f8fbff;
+    }
+
+    .menu-btn {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: white;
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .hero {
+      position: relative;
+      padding: 74px 0 70px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(37, 99, 235, 0.16);
+      box-shadow: 0 12px 30px rgba(16, 24, 40, 0.06);
+      color: var(--blue-dark);
+      font-weight: 800;
+      padding: 8px 13px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+
+    .spark {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--gold);
+      box-shadow: 0 0 0 6px rgba(246, 196, 83, 0.2);
+    }
+
+    h1 {
+      font-size: clamp(2.55rem, 6vw, 5.4rem);
+      line-height: 0.98;
+      letter-spacing: -0.075em;
+      font-weight: 900;
+      margin-bottom: 24px;
+    }
+
+    .grad-text {
+      background: linear-gradient(135deg, var(--blue), var(--purple) 62%, #c28a10);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy {
+      font-size: 1.12rem;
+      color: var(--muted);
+      max-width: 690px;
+      margin-bottom: 28px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .hero-proof {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      color: #475467;
+      font-size: 0.94rem;
+      font-weight: 700;
+    }
+
+    .proof-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.76);
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      border-radius: 999px;
+    }
+
+    .proof-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    .phone-wrap {
+      position: relative;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(0.2px);
+      z-index: -1;
+    }
+
+    .orb.one {
+      width: 170px;
+      height: 170px;
+      right: -30px;
+      top: 10px;
+      background: rgba(124, 58, 237, 0.16);
+      animation: float 7s ease-in-out infinite;
+    }
+
+    .orb.two {
+      width: 120px;
+      height: 120px;
+      left: -24px;
+      bottom: 30px;
+      background: rgba(246, 196, 83, 0.22);
+      animation: float 8s ease-in-out infinite reverse;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-18px); }
+    }
+
+    .bot-card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.84);
+      border: 1px solid rgba(230, 234, 242, 0.92);
+      border-radius: 34px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .bot-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(37, 99, 235, 0.14), transparent 15rem),
+        radial-gradient(circle at 85% 20%, rgba(124, 58, 237, 0.13), transparent 17rem);
+      pointer-events: none;
+    }
+
+    .telegram-shell {
+      position: relative;
+      border-radius: 28px;
+      background: #eef5ff;
+      overflow: hidden;
+      border: 1px solid rgba(37, 99, 235, 0.12);
+    }
+
+    .chat-head {
+      background: linear-gradient(135deg, #2aabee, var(--blue));
+      color: white;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .bot-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 18px;
+      background: white;
+      color: var(--blue);
+      display: grid;
+      place-items: center;
+      font-size: 1.35rem;
+      font-weight: 900;
+    }
+
+    .chat-head strong {
+      display: block;
+      letter-spacing: -0.02em;
+    }
+
+    .chat-head span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.86rem;
+      opacity: 0.92;
+    }
+
+    .chat-body {
+      padding: 18px;
+      display: grid;
+      gap: 13px;
+    }
+
+    .bubble {
+      max-width: 86%;
+      padding: 12px 14px;
+      border-radius: 18px;
+      font-size: 0.94rem;
+      box-shadow: 0 8px 18px rgba(16, 24, 40, 0.06);
+    }
+
+    .bubble.bot {
+      background: white;
+      border-top-left-radius: 6px;
+      color: #26334d;
+    }
+
+    .bubble.user {
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      color: white;
+      justify-self: end;
+      border-top-right-radius: 6px;
+    }
+
+    .quiz-card {
+      background: white;
+      border-radius: 22px;
+      padding: 16px;
+      box-shadow: 0 18px 40px rgba(37, 99, 235, 0.12);
+      border: 1px solid rgba(37, 99, 235, 0.1);
+    }
+
+    .quiz-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+      align-items: center;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-weight: 800;
+      font-size: 0.78rem;
+    }
+
+    .tag.gold {
+      background: var(--gold-soft);
+      color: #9a6a00;
+    }
+
+    .tag.blue {
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+    }
+
+    .timer {
+      font-variant-numeric: tabular-nums;
+      color: var(--red);
+      font-weight: 900;
+      background: #fff1f2;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+    }
+
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px;
+      margin-top: 8px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      color: #475467;
+      font-weight: 700;
+    }
+
+    .option.correct {
+      border-color: rgba(16, 185, 129, 0.3);
+      background: rgba(16, 185, 129, 0.08);
+      color: #047857;
+    }
+
+    .check {
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--green);
+      color: white;
+      font-size: 0.75rem;
+      flex: 0 0 auto;
+    }
+
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .stat {
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.72rem;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    section {
+      padding: 74px 0;
+    }
+
+    .section-head {
+      max-width: 760px;
+      margin: 0 auto 38px;
+      text-align: center;
+    }
+
+    .section-kicker {
+      color: var(--blue-dark);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      line-height: 1.06;
+      letter-spacing: -0.06em;
+      margin-bottom: 14px;
+      font-weight: 900;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+      transition: 0.28s ease;
+      position: relative;
+      overflow: hidden;
+      min-height: 235px;
+    }
+
+    .feature-card::after {
+      content: "";
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 999px;
+      right: -48px;
+      top: -48px;
+      background: rgba(37, 99, 235, 0.08);
+      transition: 0.28s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 26px 60px rgba(37, 99, 235, 0.14);
+      border-color: rgba(37, 99, 235, 0.22);
+    }
+
+    .feature-card:hover::after {
+      transform: scale(1.25);
+      background: rgba(124, 58, 237, 0.1);
+    }
+
+    .icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--blue-soft), var(--purple-soft));
+      color: var(--blue-dark);
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .icon.gold-icon {
+      background: linear-gradient(135deg, var(--gold-soft), #fff);
+      color: #b77900;
+    }
+
+    .feature-card h3 {
+      font-size: 1.16rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      position: relative;
+      z-index: 2;
+    }
+
+    .mode-section {
+      background:
+        linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(124, 58, 237, 0.07)),
+        #ffffff;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 26px;
+      align-items: stretch;
+    }
+
+    .mode-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 28px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .mode-card h3 {
+      font-size: 1.45rem;
+      letter-spacing: -0.04em;
+      margin-bottom: 10px;
+    }
+
+    .mode-card p {
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 13px;
+      align-items: start;
+      padding: 14px;
+      border-radius: 18px;
+      background: #f8fbff;
+      border: 1px solid rgba(37, 99, 235, 0.08);
+    }
+
+    .num {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      font-weight: 900;
+    }
+
+    .timeline-item strong {
+      display: block;
+      letter-spacing: -0.02em;
+    }
+
+    .timeline-item span {
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .admin-panel {
+      background: #0f172a;
+      color: white;
+      border-radius: 30px;
+      padding: 20px;
+      box-shadow: 0 26px 80px rgba(15, 23, 42, 0.3);
+      overflow: hidden;
+    }
+
+    .admin-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 16px;
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 7px;
+    }
+
+    .window-dots i {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: block;
+    }
+
+    .window-dots i:nth-child(1) { background: #ff5f57; }
+    .window-dots i:nth-child(2) { background: #ffbd2e; }
+    .window-dots i:nth-child(3) { background: #28c840; }
+
+    .admin-title {
+      color: #cbd5e1;
+      font-size: 0.88rem;
+      font-weight: 800;
+    }
+
+    .command-search {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      background: rgba(255, 255, 255, 0.07);
+      color: white;
+      border-radius: 16px;
+      outline: none;
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+
+    .command-search::placeholder {
+      color: #94a3b8;
+    }
+
+    .commands {
+      display: grid;
+      gap: 10px;
+      max-height: 430px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .commands::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .commands::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.18);
+      border-radius: 999px;
+    }
+
+    .command {
+      display: grid;
+      grid-template-columns: 170px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 13px;
+      transition: 0.2s ease;
+    }
+
+    .command:hover {
+      background: rgba(37, 99, 235, 0.2);
+      border-color: rgba(96, 165, 250, 0.34);
+    }
+
+    code {
+      color: #93c5fd;
+      font-weight: 900;
+      font-size: 0.92rem;
+    }
+
+    .command span {
+      color: #cbd5e1;
+      font-size: 0.9rem;
+    }
+
+    .copy-btn {
+      border: 0;
+      color: #0f172a;
+      background: var(--gold);
+      padding: 8px 10px;
+      border-radius: 12px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .copy-btn:hover {
+      transform: translateY(-1px);
+      background: #ffd66b;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1.04fr 0.96fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .dash-card {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      padding: 22px;
+      overflow: hidden;
+    }
+
+    .dash-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .dash-head h3 {
+      font-size: 1.22rem;
+      letter-spacing: -0.04em;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #047857;
+      background: rgba(16, 185, 129, 0.09);
+      border: 1px solid rgba(16, 185, 129, 0.18);
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .mini-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .mini {
+      border-radius: 18px;
+      padding: 14px;
+      background: #f8fbff;
+      border: 1px solid rgba(37, 99, 235, 0.08);
+    }
+
+    .mini strong {
+      display: block;
+      font-size: 1.45rem;
+      letter-spacing: -0.04em;
+    }
+
+    .mini span {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .chart-wrap {
+      height: 260px;
+      display: flex;
+      align-items: end;
+      gap: 12px;
+      padding: 18px;
+      background:
+        linear-gradient(rgba(37, 99, 235, 0.06) 1px, transparent 1px),
+        #ffffff;
+      background-size: 100% 52px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+    }
+
+    .bar {
+      flex: 1;
+      border-radius: 14px 14px 8px 8px;
+      min-height: 28px;
+      background: linear-gradient(180deg, var(--purple), var(--blue));
+      position: relative;
+      transform-origin: bottom;
+      animation: grow 1.1s ease both;
+      box-shadow: 0 12px 22px rgba(37, 99, 235, 0.18);
+    }
+
+    .bar:nth-child(even) {
+      background: linear-gradient(180deg, var(--gold), var(--blue));
+    }
+
+    .bar::after {
+      content: attr(data-label);
+      position: absolute;
+      bottom: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 900;
+    }
+
+    @keyframes grow {
+      from { transform: scaleY(0.2); opacity: 0.4; }
+      to { transform: scaleY(1); opacity: 1; }
+    }
+
+    .leaderboard {
+      display: grid;
+      gap: 12px;
+    }
+
+    .rank-row {
+      display: grid;
+      grid-template-columns: 42px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 13px;
+      border-radius: 18px;
+      background: #f8fbff;
+      border: 1px solid rgba(37, 99, 235, 0.08);
+    }
+
+    .rank {
+      width: 42px;
+      height: 42px;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      background: var(--purple-soft);
+      color: var(--purple-dark);
+      font-weight: 900;
+    }
+
+    .rank.gold-rank {
+      background: var(--gold-soft);
+      color: #a16207;
+    }
+
+    .student strong {
+      display: block;
+      letter-spacing: -0.02em;
+    }
+
+    .student span {
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .score {
+      color: var(--blue-dark);
+      font-weight: 900;
+    }
+
+    .security-band {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0f172a, #172554 48%, #312e81);
+      color: white;
+      border-radius: 36px;
+      padding: 42px;
+      box-shadow: 0 28px 90px rgba(15, 23, 42, 0.28);
+    }
+
+    .security-band::after {
+      content: "";
+      position: absolute;
+      width: 380px;
+      height: 380px;
+      right: -150px;
+      top: -150px;
+      border-radius: 50%;
+      background: rgba(246, 196, 83, 0.13);
+    }
+
+    .security-content {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .security-band h2 {
+      margin-bottom: 14px;
+    }
+
+    .security-band p {
+      color: #cbd5e1;
+    }
+
+    .security-points {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .secure-point {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .secure-point strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .secure-point span {
+      color: #cbd5e1;
+      font-size: 0.92rem;
+    }
+
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .testimonial {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+    }
+
+    .quote {
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .person {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+    }
+
+    .person strong {
+      display: block;
+    }
+
+    .person span {
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .cta-section {
+      padding-top: 20px;
+    }
+
+    .final-cta {
+      text-align: center;
+      border-radius: 38px;
+      padding: 56px 28px;
+      color: white;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(246, 196, 83, 0.3), transparent 18rem),
+        linear-gradient(135deg, var(--blue), var(--purple));
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-cta::before {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.13);
+      left: -70px;
+      bottom: -70px;
+    }
+
+    .final-cta h2,
+    .final-cta p,
+    .final-cta .hero-ctas {
+      position: relative;
+      z-index: 2;
+    }
+
+    .final-cta p {
+      color: rgba(255, 255, 255, 0.84);
+      max-width: 720px;
+      margin: 0 auto 24px;
+    }
+
+    .final-cta .hero-ctas {
+      justify-content: center;
+      margin-bottom: 0;
+    }
+
+    .btn-light {
+      background: white;
+      color: var(--blue-dark);
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: #4a3100;
+    }
+
+    footer {
+      padding: 54px 0 26px;
+      background: #ffffff;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr repeat(3, 1fr);
+      gap: 30px;
+      margin-bottom: 34px;
+    }
+
+    .footer-brand p {
+      color: var(--muted);
+      margin-top: 14px;
+      max-width: 370px;
+    }
+
+    .footer-col h4 {
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+      letter-spacing: -0.02em;
+    }
+
+    .footer-col a,
+    .footer-col span {
+      display: block;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin: 9px 0;
+    }
+
+    .footer-col a:hover {
+      color: var(--blue);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%) translateY(20px);
+      background: #0f172a;
+      color: white;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-weight: 800;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.25s ease;
+      z-index: 100;
+      box-shadow: 0 14px 40px rgba(15, 23, 42, 0.24);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .container {
+        width: min(100% - 28px, 760px);
+      }
+
+      .menu-btn {
+        display: grid;
+        place-items: center;
+      }
+
+      .navlinks {
+        position: fixed;
+        top: 74px;
+        left: 14px;
+        right: 14px;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 14px;
+        background: rgba(255, 255, 255, 0.96);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+      }
+
+      .navlinks.open {
+        display: flex;
+      }
+
+      .navlinks a {
+        border-radius: 16px;
+      }
+
+      .nav-actions .btn-secondary {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 48px;
+      }
+
+      .hero-grid,
+      .split,
+      .dashboard-grid,
+      .security-content {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-strip,
+      .features-grid,
+      .testimonials {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .security-points {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(100% - 24px, 520px);
+      }
+
+      .brand span {
+        font-size: 1.02rem;
+      }
+
+      .logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 14px;
+      }
+
+      .nav-actions .btn-primary {
+        display: none;
+      }
+
+      h1 {
+        letter-spacing: -0.065em;
+      }
+
+      .hero-copy {
+        font-size: 1rem;
+      }
+
+      .hero-ctas .btn {
+        width: 100%;
+      }
+
+      .stats-strip,
+      .features-grid,
+      .mini-metrics,
+      .testimonials,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 54px 0;
+      }
+
+      .bot-card {
+        padding: 10px;
+        border-radius: 26px;
+      }
+
+      .telegram-shell {
+        border-radius: 22px;
+      }
+
+      .bubble {
+        max-width: 94%;
+      }
+
+      .command {
+        grid-template-columns: 1fr;
+      }
+
+      .copy-btn {
+        width: 100%;
+      }
+
+      .chart-wrap {
+        height: 220px;
+        gap: 7px;
+        padding: 12px;
+      }
+
+      .security-band {
+        padding: 28px 20px;
+        border-radius: 28px;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <nav class="container nav" aria-label="Primary navigation">
+      <a href="#home" class="brand" aria-label="EduBot-Pro home">
+        <span class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M21 4.5 3.6 11.2c-.9.35-.85 1.63.07 1.9l4.45 1.33 1.7 5.15c.28.86 1.38 1.1 2 .44l2.42-2.42 4.36 3.2c.74.54 1.8.12 1.96-.79L23 5.8c.16-.93-.9-1.65-2-.3Z" fill="currentColor"/>
+            <path d="m8.3 14.2 9.1-5.72-7.3 7.22-.27 3.2-1.53-4.7Z" fill="white" opacity=".88"/>
+          </svg>
+        </span>
+        <span>EduBot-Pro</span>
+      </a>
+
+      <div class="navlinks" id="navlinks">
+        <a href="#features">Features</a>
+        <a href="#modes">Modes</a>
+        <a href="#admin">Admin Panel</a>
+        <a href="#results">Results</a>
+        <a href="#security">Security</a>
+        <a href="#testimonials">Stories</a>
+      </div>
+
+      <div class="nav-actions">
+        <a class="btn btn-secondary" href="#admin">View Commands</a>
+        <a class="btn btn-primary" href="https://telegram.org/" target="_blank" rel="noopener">Launch Bot</a>
+        <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <main id="home">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content reveal">
+          <div class="eyebrow"><span class="spark"></span> AI-powered Telegram learning for Class 1–12</div>
+          <h1>Study smarter. Take exams securely. Grow with <span class="grad-text">EduBot-Pro.</span></h1>
+          <p class="hero-copy">
+            A modern Telegram bot platform for students, teachers, and institutes—combining adaptive self-study, admin-controlled exams, smart timers, gamification, instant final results, and secure PostgreSQL/Neon database management.
+          </p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="https://telegram.org/" target="_blank" rel="noopener">
+              Start on Telegram
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="btn btn-secondary" href="#results">Preview Dashboard</a>
+          </div>
+          <div class="hero-proof">
+            <span class="proof-pill"><span class="proof-dot"></span> 99.9% bot-ready uptime</span>
+            <span class="proof-pill">⚡ Instant scoring</span>
+            <span class="proof-pill">🔐 Secure exam control</span>
+          </div>
+        </div>
+
+        <div class="phone-wrap reveal">
+          <div class="orb one"></div>
+          <div class="orb two"></div>
+          <div class="bot-card">
+            <div class="telegram-shell">
+              <div class="chat-head">
+                <div class="bot-avatar">EP</div>
+                <div>
+                  <strong>EduBot-Pro</strong>
+                  <span><span class="proof-dot"></span> online • AI exam assistant</span>
+                </div>
+              </div>
+              <div class="chat-body">
+                <div class="bubble bot">Welcome, Aarya! Choose your mode: Self-Study Practice or Admin Exam.</div>
+                <div class="bubble user">Start Class 10 Science adaptive quiz</div>
+                <div class="quiz-card">
+                  <div class="quiz-top">
+                    <span class="tag gold">Class 10 • Science</span>
+                    <span class="timer" id="heroTimer">02:00</span>
+                  </div>
+                  <strong>Which process converts light energy into chemical energy?</strong>
+                  <div class="option">A. Respiration</div>
+                  <div class="option correct"><span class="check">✓</span> B. Photosynthesis</div>
+                  <div class="option">C. Transpiration</div>
+                </div>
+                <div class="bubble bot">Correct! +10 XP. Your accuracy improved to 92% this week.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container stats-strip reveal">
+        <div class="stat"><strong>1–12</strong><span>Class coverage</span></div>
+        <div class="stat"><strong>AI</strong><span>Adaptive practice</span></div>
+        <div class="stat"><strong>Live</strong><span>Leaderboards</span></div>
+        <div class="stat"><strong>Neon</strong><span>PostgreSQL-ready</span></div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">Learning engine</div>
+          <h2>A complete academic workflow inside Telegram.</h2>
+          <p>EduBot-Pro keeps the experience simple for students while giving admins powerful tools for structured exams, insights, and performance management.</p>
+        </div>
+
+        <div class="features-grid">
+          <article class="feature-card reveal">
+            <div class="icon">
+              <svg width="25" height="25" viewBox="0 0 24 24" fill="none"><path d="M4 19.5V5.8C4 4.8 4.8 4 5.8 4H19v14H5.8A1.8 1.8 0 0 0 4 19.8Zm0 0A2.5 2.5 0 0 0 6.5 22H20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </div>
+            <h3>Self-Study Mode</h3>
+            <p>Students can practice subject-wise chapters, get AI hints, review mistakes, and continue learning at their own pace from Class 1 to Class 12.</p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="icon gold-icon">
+              <svg width="25" height="25" viewBox="0 0 24 24" fill="none"><path d="M9 12.5 11 14.5 15.5 10M12 3l7 3v5c0 4.8-2.9 8.3-7 10-4.1-1.7-7-5.2-7-10V6l7-3Z" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3>Admin-Controlled Exam Mode</h3>
+            <p>Admins can schedule tests, lock access, set duration, assign classes, publish results, and maintain controlled exam rules directly through commands.</p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="icon">
+              <svg width="25" height="25" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M4 13h16M6 7h4m4 10h4M5 21h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2Z" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </div>
+            <h3>Adaptive Learning</h3>
+            <p>The platform identifies weak areas, adjusts difficulty, recommends revision, and personalizes practice based on accuracy and response time.</p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="icon">
+              <svg width="25" height="25" viewBox="0 0 24 24" fill="none"><path d="M12 8v5l3 2M9 2h6M12 22a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </div>
+            <h3>Smart Timers</h3>
+            <p>Timed questions, test-level countdowns, auto-submit logic, and clear exam windows help institutes run disciplined digital assessments.</p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="icon gold-icon">
+              <svg width="25" height="25" viewBox="0 0 24 24" fill="none"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Zm10 2h3v2a3 3 0 0 1-3 3M7 6H4v2a3 3 0 0 0 3 3" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3>Gamification</h3>
+            <p>XP points, streaks, badges, levels, and milestone rewards make daily learning motivating without compromising academic seriousness.</p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="icon">
+              <svg width="25" height="25" viewBox="0 0 24 24" fill="none"><path d="M5 20V10m7 10V4m7 16v-7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </div>
+            <h3>Leaderboard</h3>
+            <p>Live class-wise rankings highlight top performers, improvement champions, and exam toppers with transparent scoring and accuracy tracking.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="modes" class="mode-section">
+      <div class="container split">
+        <div class="mode-card reveal">
+          <div class="section-kicker">Student journey</div>
+          <h2>From practice to confidence.</h2>
+          <p>EduBot-Pro guides students through a friendly learning loop that is easy to access, easy to repeat, and easy to improve.</p>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="num">1</div>
+              <div><strong>Select class, subject, and chapter</strong><span>Students start instantly using Telegram commands or guided buttons.</span></div>
+            </div>
+            <div class="timeline-item">
+              <div class="num">2</div>
+              <div><strong>Practice adaptive questions</strong><span>AI adjusts practice sets based on previous attempts and weak concepts.</span></div>
+            </div>
+            <div class="timeline-item">
+              <div class="num">3</div>
+              <div><strong>Review explanations</strong><span>Every mistake becomes a learning moment with concise feedback.</span></div>
+            </div>
+            <div class="timeline-item">
+              <div class="num">4</div>
+              <div><strong>Earn XP and improve rank</strong><span>Progress is visible through streaks, accuracy, and leaderboard movement.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mode-card reveal">
+          <div class="section-kicker">Exam control</div>
+          <h2>Built for teachers, admins, and institutes.</h2>
+          <p>Run secure, structured, timed exams with clear settings and final result dashboards that reduce manual checking workload.</p>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="num">A</div>
+              <div><strong>Create exam blueprint</strong><span>Define class, subject, total marks, question bank, negative marking, and duration.</span></div>
+            </div>
+            <div class="timeline-item">
+              <div class="num">B</div>
+              <div><strong>Open or close exam access</strong><span>Control availability, start time, eligible batches, and attempt limits.</span></div>
+            </div>
+            <div class="timeline-item">
+              <div class="num">C</div>
+              <div><strong>Monitor submissions</strong><span>Track completion, time taken, pending users, and suspicious patterns.</span></div>
+            </div>
+            <div class="timeline-item">
+              <div class="num">D</div>
+              <div><strong>Publish final results</strong><span>Share marks, rank, accuracy, percentile, and answer review in seconds.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="admin">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">Admin commands</div>
+          <h2>Structured command panel for secure exam management.</h2>
+          <p>Organize student access, exams, questions, leaderboards, and data operations with a clean command workflow.</p>
+        </div>
+
+        <div class="admin-panel reveal">
+          <div class="admin-top">
+            <div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="admin-title">EduBot-Pro Admin Console</div>
+          </div>
+          <input class="command-search" id="commandSearch" type="search" placeholder="Search commands like /create_exam, /results, /lock_exam..." aria-label="Search admin commands" />
+          <div class="commands" id="commands">
+            <div class="command" data-command="/create_exam"><code>/create_exam</code><span>Create a new test with class, subject, date, duration, and marks.</span><button class="copy-btn">Copy</button></div>
+            <div class="command" data-command="/add_questions"><code>/add_questions</code><span>Upload or add MCQ, numeric, true/false, and explanation-based questions.</span><button class="copy-btn">Copy</button></div>
+            <div class="command" data-command="/assign_exam"><code>/assign_exam</code><span>Assign exam to Class 1–12, batch, subject group, or individual students.</span><button class="copy-btn">Copy</button></div>
+            <div class="command" data-command="/start_exam"><code>/start_exam</code><span>Open exam access and notify eligible students on Telegram.</span><button class="copy-btn">Copy</button></div>
+            <div class="command" data-command="/lock_exam"><code>/lock_exam</code><span>Lock exam window, disable late entries, or freeze submissions.</span><button class="copy-btn">Copy</button></div>
+            <div class="command" data-command="/set_timer"><code>/set_timer</code><span>Configure question-wise or full-test countdown timers.</span><button class="copy-btn">Copy</button></div>
+            <div class="command" data-command="/monitor"><code>/monitor</code><span>View live attempts, completion percentage, average score, and pending users.</span><button class="copy-btn">Copy</button></div>
+            <div class="command" data-command="/results"><code>/results</code><span>Generate final marks, rank, accuracy, percentile, and downloadable summaries.</span><button class="copy-btn">Copy</button></div>
+            <div class="command" data-command="/leaderboard"><code>/leaderboard</code><span>Publish class-wise, subject-wise, or exam-wise leaderboard.</span><button class="copy-btn">Copy</button></div>
+            <div class="command" data-command="/backup_db"><code>/backup_db</code><span>Trigger PostgreSQL/Neon database backup and integrity status check.</span><button class="copy-btn">Copy</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="results">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">Final results preview</div>
+          <h2>Clear dashboards for performance, accuracy, and ranking.</h2>
+          <p>Admins get a polished result overview while students receive easy-to-understand performance feedback right inside Telegram.</p>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="dash-card reveal">
+            <div class="dash-head">
+              <h3>Class 10 Science • Final Results</h3>
+              <span class="status"><span class="proof-dot"></span> Published</span>
+            </div>
+            <div class="mini-metrics">
+              <div class="mini"><strong>94%</strong><span>Top score</span></div>
+              <div class="mini"><strong>82%</strong><span>Avg accuracy</span></div>
+              <div class="mini"><strong>376</strong><span>Submissions</span></div>
+            </div>
+            <div class="chart-wrap" aria-label="Score distribution chart">
+              <div class="bar" style="height: 38%;" data-label="0-40"></div>
+              <div class="bar" style="height: 52%;" data-label="41-55"></div>
+              <div class="bar" style="height: 68%;" data-label="56-70"></div>
+              <div class="bar" style="height: 86%;" data-label="71-85"></div>
+              <div class="bar" style="height: 74%;" data-label="86-95"></div>
+              <div class="bar" style="height: 45%;" data-label="96+"></div>
+            </div>
+          </div>
+
+          <div class="dash-card reveal">
+            <div class="dash-head">
+              <h3>Live Leaderboard</h3>
+              <span class="tag gold">Top 5</span>
+            </div>
+            <div class="leaderboard">
+              <div class="rank-row">
+                <div class="rank gold-rank">1</div>
+                <div class="student"><strong>Aarya Singh</strong><span>Class 10 • 28m 14s • 97% accuracy</span></div>
+                <div class="score">94/100</div>
+              </div>
+              <div class="rank-row">
+                <div class="rank gold-rank">2</div>
+                <div class="student"><strong>Rohan Mehta</strong><span>Class 10 • 31m 02s • 93% accuracy</span></div>
+                <div class="score">91/100</div>
+              </div>
+              <div class="rank-row">
+                <div class="rank gold-rank">3</div>
+                <div class="student"><strong>Zoya Khan</strong><span>Class 10 • 33m 40s • 91% accuracy</span></div>
+                <div class="score">89/100</div>
+              </div>
+              <div class="rank-row">
+                <div class="rank">4</div>
+                <div class="student"><strong>Vihaan Rao</strong><span>Class 10 • 35m 10s • 88% accuracy</span></div>
+                <div class="score">86/100</div>
+              </div>
+              <div class="rank-row">
+                <div class="rank">5</div>
+                <div class="student"><strong>Meera Das</strong><span>Class 10 • 36m 21s • 86% accuracy</span></div>
+                <div class="score">84/100</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="security">
+      <div class="container">
+        <div class="security-band reveal">
+          <div class="security-content">
+            <div>
+              <div class="section-kicker" style="color:#fcd34d;">Database security</div>
+              <h2>PostgreSQL/Neon-ready architecture for dependable exam data.</h2>
+              <p>Designed for secure student records, exam submissions, audit-friendly admin operations, and fast result computation without compromising data integrity.</p>
+            </div>
+            <div class="security-points">
+              <div class="secure-point"><strong>Encrypted credentials</strong><span>Protect bot tokens, admin access, and database connection strings.</span></div>
+              <div class="secure-point"><strong>Role-based controls</strong><span>Separate permissions for super admins, teachers, and student users.</span></div>
+              <div class="secure-point"><strong>Reliable audit trails</strong><span>Track exam creation, edits, locks, result publishing, and backups.</span></div>
+              <div class="secure-point"><strong>Fast query performance</strong><span>Optimized PostgreSQL tables for attempts, scores, ranks, and analytics.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="testimonials">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">Student voices</div>
+          <h2>Friendly for learners. Trusted by educators.</h2>
+          <p>EduBot-Pro feels like a personal academic assistant while giving institutes accurate and secure assessment workflows.</p>
+        </div>
+
+        <div class="testimonials">
+          <article class="testimonial reveal">
+            <p class="quote">“The adaptive quizzes helped me revise weak chapters before my science test. I liked the instant explanations and XP rewards.”</p>
+            <div class="person"><div class="avatar">AS</div><div><strong>Aarya Singh</strong><span>Class 10 Student</span></div></div>
+          </article>
+          <article class="testimonial reveal">
+            <p class="quote">“As an admin, I can schedule exams, lock attempts, and publish results much faster. The command panel is simple and powerful.”</p>
+            <div class="person"><div class="avatar">PM</div><div><strong>Priya Menon</strong><span>Academic Coordinator</span></div></div>
+          </article>
+          <article class="testimonial reveal">
+            <p class="quote">“Leaderboard and streaks made daily practice fun. I can study in Telegram without installing another heavy app.”</p>
+            <div class="person"><div class="avatar">RK</div><div><strong>Rohan Kumar</strong><span>Class 8 Student</span></div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <div class="final-cta reveal">
+          <h2>Bring performance, accuracy, and secure exam management to Telegram.</h2>
+          <p>Launch EduBot-Pro for your students and manage everything from self-study practice to final results with a fast, polished, AI-powered education platform.</p>
+          <div class="hero-ctas">
+            <a class="btn btn-light" href="https://telegram.org/" target="_blank" rel="noopener">Launch EduBot-Pro</a>
+            <a class="btn btn-gold" href="#admin">Explore Admin Commands</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#home" class="brand">
+            <span class="logo" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M21 4.5 3.6 11.2c-.9.35-.85 1.63.07 1.9l4.45 1.33 1.7 5.15c.28.86 1.38 1.1 2 .44l2.42-2.42 4.36 3.2c.74.54 1.8.12 1.96-.79L23 5.8c.16-.93-.9-1.65-2-.3Z" fill="currentColor"/>
+                <path d="m8.3 14.2 9.1-5.72-7.3 7.22-.27 3.2-1.53-4.7Z" fill="white" opacity=".88"/>
+              </svg>
+            </span>
+            <span>EduBot-Pro</span>
+          </a>
+          <p>AI-powered educational and exam platform for Class 1–12 students, built for performance, accuracy, and secure exam management.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Platform</h4>
+          <a href="#features">Features</a>
+          <a href="#modes">Learning Modes</a>
+          <a href="#results">Results Dashboard</a>
+          <a href="#security">Database Security</a>
+        </div>
+        <div class="footer-col">
+          <h4>For Admins</h4>
+          <a href="#admin">Command Panel</a>
+          <span>Timed Assessments</span>
+          <span>Student Monitoring</span>
+          <span>Leaderboard Publishing</span>
+        </div>
+        <div class="footer-col">
+          <h4>Highlights</h4>
+          <span>Fast Telegram UX</span>
+          <span>Accurate scoring</span>
+          <span>PostgreSQL/Neon DB</span>
+          <span>Secure exam workflows</span>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 EduBot-Pro. All rights reserved.</span>
+        <span>Built for smart learning, trusted exams, and reliable academic data.</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">Command copied</div>
+
+  <script>
+    const menuBtn = document.getElementById("menuBtn");
+    const navlinks = document.getElementById("navlinks");
+
+    menuBtn.addEventListener("click", () => {
+      navlinks.classList.toggle("open");
+    });
+
+    navlinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => navlinks.classList.remove("open"));
+    });
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
+
+    const commandSearch = document.getElementById("commandSearch");
+    const commands = [...document.querySelectorAll(".command")];
+
+    commandSearch.addEventListener("input", (event) => {
+      const value = event.target.value.toLowerCase().trim();
+      commands.forEach(command => {
+        const text = command.textContent.toLowerCase();
+        command.style.display = text.includes(value) ? "grid" : "none";
+      });
+    });
+
+    const toast = document.getElementById("toast");
+
+    document.querySelectorAll(".copy-btn").forEach(button => {
+      button.addEventListener("click", async () => {
+        const command = button.closest(".command").dataset.command;
+        try {
+          await navigator.clipboard.writeText(command);
+          toast.textContent = `${command} copied`;
+        } catch (error) {
+          toast.textContent = command;
+        }
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 1800);
+      });
+    });
+
+    let seconds = 120;
+    const timer = document.getElementById("heroTimer");
+
+    setInterval(() => {
+      seconds = seconds <= 0 ? 120 : seconds - 1;
+      const min = String(Math.floor(seconds / 60)).padStart(2, "0");
+      const sec = String(seconds % 60).padStart(2, "0");
+      timer.textContent = `${min}:${sec}`;
+    }, 1000);
+  </script>
+</body>
+</html>
